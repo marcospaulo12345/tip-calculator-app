@@ -34,6 +34,11 @@ body {
   flex-direction: column;
 }
 
+.container header {
+  margin-bottom: 14px;
+  margin-top: 14px;
+}
+
 .container main {
   width: 650px;
   display: flex;
@@ -41,24 +46,20 @@ body {
   background-color: var(--white);
   border-radius: 16px;
   padding: 16px;
+  margin-bottom: 14px;
 }
 
-.container h1 {
-  font-size: 24px;
-  color: hsl(183, 100%, 15%);
-  margin: 24px 0;
-}
 
-.container main h2 {
-  font-size: 16px;
+.container main label {
+  font-size: 12px;
   color: var(--btn-bg);
+  font-weight: 700;
 }
 
 
-.container main h3 {
+.container main p {
   font-size: 16px;
   color: var(--white);
-
 }
 
 .container main span {
@@ -66,33 +67,60 @@ body {
   color: var(--btn-bg);
 }
 
-.container .main-left .bill div{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+input {
   background-color: var(--card-bg);
-  padding: 8px;
   margin-top: 5px;
-}
-
-.container .main-left .bill div input {
-  background: transparent;
+  border-radius: 4px; 
+  padding: 2px;
+  padding-right: 8px;
+  outline: none;
+  background-position: 14px 10px;
+  background-repeat: no-repeat;
   border: none;
-  height: 24px;
   text-align: right;
+  font-family: 'Space Mono', sans-serif;
+  width: 100%;
   font-size: 24px;
   color: hsl(183, 100%, 15%);
-  font-family: 'Space Mono', sans-serif;
-  width: 230px;
+  font-weight: 700;
 }
 
-.container .main-left .bill div input:focus {
+.container .main-left .bill {
+  display: flex;
+  flex-direction: column;
+}
+
+.container .main-left .bill div {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container .main-left .bill span {
+  font-size: 12px;
+  color: red;
+  font-weight: 700;
+}
+
+.container .main-left .bill input {
+  background-image: url('../public/icon-dollar.svg');
+}
+
+input:focus {
   box-shadow: 0 0 0 0;
   outline: 0;
 }
 
-.container .main-left .bill div:hover {
+input:hover {
   border: 1px solid var(--stroncyan);
+}
+
+.errroInput {
+  border: 1px solid red !important;
+}
+
+.container .main-left .tip {
+  margin-top: 10px;
 }
 
 .container .main-left .tip div{
@@ -101,7 +129,7 @@ body {
   justify-content: space-between;
 }
 
-.container .main-left .tip div button {
+.container .main-left .tip button {
   width: 90px;
   margin: 5px 0;
   padding: 6px 14px;
@@ -115,68 +143,46 @@ body {
   cursor: pointer;
 }
 
+.container .main-left .tip .tip-button {
+  background-color: var(--result-bg);
+  color: var(--white);
+}
+
+.container .main-left .tip .selectButton {
+  background-color: hsl(172, 67%, 45%);
+  color: hsl(183, 100%, 15%);
+}
+
 .container .main-left .tip div button:hover {
-  background-color: var(--stroncyan)
+  background-color: var(--stroncyan) !important;
+  color: hsl(183, 100%, 15%) !important;
 }
 
 .container .main-left .tip div input {
   width: 90px;
-  margin: 5px 0;
-  padding: 6px 14px;
-  background-color: var(--card-bg);
-  border: none;
-  color: hsl(183, 100%, 15%);
-  font-weight: 700;
   font-size: 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: right;
-  font-family: 'Space Mono', sans-serif;
-}
-
-.container .main-left .tip div input:focus {
-  box-shadow: 0 0 0 0;
-  outline: 0;
-}
-
-.container .main-left .tip div input:hover {
-  border: 1px solid var(--stroncyan);
-}
-
-.container .main-left .tip h2 {
-  margin-top: 30px;
+  font-weight: 700;
 }
 
 .container .main-left .num-people {
-  margin-top: 30px;
-}
-
-.container .main-left .num-people div:hover {
-  border: 1px solid var(--stroncyan);
+  margin-top: 10px;
 }
 
 .container .main-left .num-people div {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--card-bg);
-  padding: 8px;
+  margin-bottom: 2px;
 }
 
-.container .main-left .num-people div input {
-  background: transparent;
-  border: none;
-  height: 24px;
-  text-align: right;
-  font-size: 24px;
-  color: hsl(183, 100%, 15%);
-  font-family: 'Space Mono', sans-serif;
-  width: 230px;
+.container .main-left .num-people div span {
+  font-size: 12px;
+  color: red;
+  font-weight: 700;
 }
 
-.container .main-left .num-people div  input:focus {
-  box-shadow: 0 0 0 0;
-  outline: 0;
+.container .main-left .num-people input {
+  background-image: url('../public/icon-person.svg');
 }
 
 .container .main-left {
@@ -187,7 +193,7 @@ body {
 .container .main-right {
   width: 100%;
   height: 100%; 
-  padding: 32px 24px;
+  padding: 22px 24px;
   border-radius: 10px;
   background-color: var(--result-bg);
   display: flex;
@@ -202,16 +208,16 @@ body {
 .container .main-right .main-right-type {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
   align-items: center;
 }
 
-.container .main-right .main-right-type h2 {
+.container .main-right .main-right-type h1 {
   color: var(--stroncyan);
   font-size: 40px;
 }
 
-.container .main-right .main-right-type h3{
+.container .main-right .main-right-type p{
   font-size: 14px;
   font-weight: 700;
 }
@@ -246,19 +252,17 @@ body {
   .container main {
     width: 90%;
   }
-
-  .container .main-left .bill div input {
-    width: 80%;
-  }
-  .container .main-left .num-people div input {
-    width: 80%;
-  }
 }
 
 @media (max-width: 375px) {
+
+  .container {
+    height: inherit;
+  }
+
   .container main{
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;   
   }
 
   .container .main-left .tip div button{

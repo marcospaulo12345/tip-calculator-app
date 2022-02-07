@@ -6,12 +6,35 @@ function App() {
   const [bill, setBill] = useState('');
   const [numPeople, setNumPeople] = useState('');
   const [tip, setTip] = useState('');
+
+  const [selectButton, setSelectButton] = useState(0);
   
   const [tipAmount, setTipAmount] = useState(0);
   const [total, setTotal] = useState(0);
+  const [customTip, setCustomTip] = useState('');
 
-  function handleTip(value) {
-    setTip(value);
+  const [mensageNumPeoples, setMensageNumPeoples] = useState(false);
+  const [mensageBill, setMensageBill] = useState(false);
+
+  function handleTip(value, type='0') {
+    if (type === '1'){
+      setCustomTip(value);
+      setTip(value);
+    } else {
+      setTip(value);
+    }
+    setSelectButton(value);
+    
+  }
+
+  function handleNumPeople(value) {
+    setNumPeople(value);
+    setMensageNumPeoples(false);
+  }
+
+  function handleBill(value) {
+    setBill(value);
+    setMensageBill(false);
   }
 
   function reset(){
@@ -20,65 +43,85 @@ function App() {
     setBill('');
     setNumPeople('');
     setTip('');
-    
+    setCustomTip('');
+    setSelectButton(0);    
+    setMensageNumPeoples(false);
+    setMensageBill(false);
   }
 
   useEffect(() => {
-    if(bill !== ''){
-      console.log('teste')
-      let discount = (Number(bill) * Number(tip))
-      setTipAmount( discount / Number(numPeople));
-      setTotal(((discount + Number(bill)) / 5.0));
+    if(bill !== '' && numPeople !== '' && tip !== '') {
+      if(Number(numPeople) < 1){
+        setMensageNumPeoples(true);
+      } else if(Number(bill) < 1) {
+        setMensageBill(true);
+      } else{
+        console.log('teste')
+        let discount = (Number(bill) * (Number(tip) / 100))
+        setTipAmount( discount / Number(numPeople));
+        setTotal(((discount + Number(bill)) / numPeople));
+      }
+      
     }
-  }, [bill && numPeople && tip]);
+  }, [bill, numPeople, tip]);
 
   return (
     <div className="container">
-      <h1>S P L I<br/>T T E R</h1>
+      <header>
+        <img src='./logo.svg' alt='Logo'/>
+      </header>
       
       <main>
 
         <article className='main-left'>
 
           <div className='bill'>
-            <h2>Bill</h2>
             <div>
-              <img src="./icon-dollar.svg" alt='Icon Dollar' />
-              <input 
-                value={bill}
-                onChange={(e) => setBill(e.target.value)}
-                placeholder='0'
-              />
+              <label>Bill</label>
+              {mensageBill && (
+                <span>Can't be zero</span>
+              )}
             </div>
+            <input 
+              type='number'
+              value={bill}
+              onChange={(e) => handleBill(e.target.value)}
+              className={`${mensageBill && 'errroInput'}`}
+              placeholder='0'
+            />
           </div>
 
           <div className='tip'>
-            <h2>Select Tip %</h2>
+            <label>Select Tip %</label>
             <div>
-              <button onClick={() => handleTip(0.05)}>5%</button>
-              <button onClick={() => handleTip(0.10)}>10%</button>
-              <button onClick={() => handleTip(0.15)}>15%</button>
-              <button onClick={() => handleTip(0.25)}>25%</button>
-              <button onClick={() => handleTip(0.50)}>50%</button>
+              <button onClick={() => handleTip(5)} className={`${selectButton === 5 ? 'selectButton' : 'tip-button'}`}>5%</button>
+              <button onClick={() => handleTip(10)} className={`${selectButton === 10 ? 'selectButton' : 'tip-button'}`}>10%</button>
+              <button onClick={() => handleTip(15)} className={`${selectButton === 15 ? 'selectButton' : 'tip-button'}`}>15%</button>
+              <button onClick={() => handleTip(25)} className={`${selectButton === 25 ? 'selectButton' : 'tip-button'}`}>25%</button>
+              <button onClick={() => handleTip(50)} className={`${selectButton === 50 ? 'selectButton' : 'tip-button'}`}>50%</button>
               <input 
                 placeholder="Custom"
-                onChange={(e) => handleTip(e.target.value)}
-
+                onChange={(e) => handleTip(e.target.value, '1')}
+                value={customTip}
+                onClick={() => setSelectButton(0)}
               />
             </div>
           </div>
 
           <div className='num-people'>
-            <h2>Number of People</h2>
             <div>
-              <img src='./icon-person.svg' alt='Icon Person'/>
-              <input 
-                value={numPeople}
-                onChange={(e) => setNumPeople(e.target.value)}
-                placeholder='0'
-              />
-
+              <label>Number of People</label>
+              {mensageNumPeoples && (
+                <span>Can't be zero</span>
+              )}
             </div>
+            <input
+              type='number' 
+              value={numPeople}
+              onChange={(e) => handleNumPeople(e.target.value)}
+              className={`${mensageNumPeoples && 'errroInput'}`}
+              placeholder='0'
+            />
           </div>
         </article>
 
@@ -86,28 +129,28 @@ function App() {
 
           <div className='main-right-type'>
             <div>
-              <h3>Tip Amount</h3>
+              <p>Tip Amount</p>
               <span>/ person</span>
             </div>
-            <h2>${tipAmount.toFixed(2)}</h2>
+            <h1>${tipAmount.toFixed(2)}</h1>
           </div>
 
           <div className='main-right-type'>
             <div>
-              <h3>Total</h3>
+              <p>Total</p>
               <span>/ person</span>
             </div>
-            <h2>${total.toFixed(2)}</h2>
+            <h1>${total.toFixed(2)}</h1>
           </div>
 
-          <button onClick={reset}>RESET</button>
+          <button onClick={reset} >RESET</button>
         </article>
       </main>
 
-      <div className="attribution">
+      <footer className="attribution">
         Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
         Coded by <a href="https://www.linkedin.com/in/marcos-paulo-fontes-feitosa-894525182/">Marcos Paulo</a>.
-      </div>
+      </footer>
     </div>
   );
 }
